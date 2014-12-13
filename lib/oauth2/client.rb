@@ -90,6 +90,10 @@ module OAuth2
 
       url = connection.build_url(url, opts[:params]).to_s
 
+      if @id and @secret
+        connection.basic_auth @id, @secret
+      end
+
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
       end
